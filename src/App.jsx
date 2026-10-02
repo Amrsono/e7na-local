@@ -10,6 +10,9 @@ import RfqModal from './components/RfqModal';
 import OnboardBrandModal from './components/OnboardBrandModal';
 import FloatingWidgets from './components/FloatingWidgets';
 import Footer from './components/Footer';
+import OutletBasketDrawer from './components/OutletBasketDrawer';
+import OutletAuthModal from './components/OutletAuthModal';
+import CustomerAccountModal from './components/CustomerAccountModal';
 
 import { BRANDS } from './data/brandsData';
 
@@ -179,7 +182,7 @@ export default function App() {
         onOpenRfq={() => handleOpenRfqForBrand(null)}
       />
 
-      {/* Modals */}
+      {/* Brand Profile & Outlet Boutique Modal */}
       {selectedBrand && (
         <BrandModal
           brand={selectedBrand}
@@ -190,6 +193,7 @@ export default function App() {
         />
       )}
 
+      {/* Wholesale RFQ Modal */}
       {isRfqModalOpen && (
         <RfqModal
           brand={rfqModalBrand}
@@ -198,12 +202,31 @@ export default function App() {
         />
       )}
 
+      {/* Brand Onboarding Modal */}
       {isOnboardModalOpen && (
         <OnboardBrandModal
           lang={lang}
           onClose={() => setIsOnboardModalOpen(false)}
         />
       )}
+
+      {/* Outlet-Specific Cart Drawer */}
+      <OutletBasketDrawer
+        lang={lang}
+        currency={currency}
+      />
+
+      {/* Outlet Checkout & Deferred Login Modal */}
+      <OutletAuthModal
+        lang={lang}
+        currency={currency}
+      />
+
+      {/* Mall Shopper Account & Order Tracking Modal */}
+      <CustomerAccountModal
+        lang={lang}
+        currency={currency}
+      />
 
       {/* Footer */}
       <Footer lang={lang} />

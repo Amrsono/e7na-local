@@ -11,8 +11,13 @@ import {
   Compass,
   Search,
   ShoppingBag,
-  Ship
+  Ship,
+  User,
+  ShieldCheck,
+  Package
 } from 'lucide-react';
+import { useMall } from '../context/MallContext';
+import { BRANDS } from '../data/brandsData';
 
 export default function Header({ 
   theme, 
@@ -27,6 +32,13 @@ export default function Header({
   setActiveTab
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { 
+    customer, 
+    setIsAccountModalOpen, 
+    totalBasketItemsCount, 
+    outletBaskets,
+    setActiveOutletBasketBrand 
+  } = useMall();
 
   const toggleLang = () => {
     const nextLang = lang === 'en' ? 'ar' : 'en';
@@ -39,6 +51,20 @@ export default function Header({
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
     document.documentElement.setAttribute('data-theme', nextTheme);
+  };
+
+  // Helper to open the first active outlet basket
+  const handleOpenActiveBasket = () => {
+    const activeBrandIds = Object.keys(outletBaskets).filter(id => outletBaskets[id]?.length > 0);
+    if (activeBrandIds.length > 0) {
+      const brand = BRANDS.find(b => b.id === Number(activeBrandIds[0]));
+      if (brand) {
+        setActiveOutletBasketBrand(brand);
+        return;
+      }
+    }
+    // fallback to account modal
+    setIsAccountModalOpen(true);
   };
 
   return (
@@ -65,7 +91,7 @@ export default function Header({
               </span>
             </div>
             <p className="text-[11px] text-[color:var(--ink-muted)] font-semibold -mt-0.5">
-              {lang === 'ar' ? 'شبكة الربط الرقمي للعلامات المصرية' : 'Egypt\'s Brand Digital Link Network'}
+              {lang === 'ar' ? 'مول الربط الرقمي للعلامات والمصانع المصرية' : 'Egypt\'s Digital Brand Mall & Export Hub'}
             </p>
           </div>
         </div>
@@ -121,8 +147,8 @@ export default function Header({
           </button>
         </nav>
 
-        {/* Right Tools Controls */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        {/* Right Tools & Account Controls */}
+        <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
           {/* Currency Switcher */}
           <select 
@@ -155,19 +181,58 @@ export default function Header({
             {theme === 'dark' ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
           </button>
 
+          {/* Outlet Basket Icon Indicator (if items exist) */}
+          <button
+            onClick={handleOpenActiveBasket}
+            className={`relative p-2 rounded-xl border transition flex items-center justify-center ${
+              totalBasketItemsCount > 0
+                ? 'border-amber-400/50 bg-amber-400/15 text-amber-400 hover:bg-amber-400/25'
+                : 'border-[color:var(--hairline)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--ink-muted)] hover:text-[color:var(--ink)]'
+            }`}
+            title={lang === 'ar' ? 'سلة مشتريات المعارض' : 'Outlet Baskets'}
+          >
+            <ShoppingBag className="w-4 h-4" />
+            {totalBasketItemsCount > 0 && (
+              <span className="absolute -top-1 -right-1 px-1.5 py-0.2 rounded-full bg-amber-400 text-slate-950 font-black text-[10px] shadow-sm animate-pulse">
+                {totalBasketItemsCount}
+              </span>
+            )}
+          </button>
+
+          {/* Mall Account Button (Explaining Open Guest Mode vs Logged In) */}
+          <button
+            onClick={() => setIsAccountModalOpen(true)}
+            className={`px-3 py-2 rounded-xl border text-xs font-bold transition flex items-center gap-1.5 ${
+              customer?.isLoggedIn 
+                ? 'border-emerald-400/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
+                : 'border-[color:var(--hairline)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--ink)] hover:border-cyan-400/50'
+            }`}
+            title={customer?.isLoggedIn ? 'Customer Mall Account' : 'Mall Guest Mode — Browse Freely'}
+          >
+            <User className={`w-3.5 h-3.5 ${customer?.isLoggedIn ? 'text-emerald-400' : 'text-cyan-400'}`} />
+            <span className="hidden md:inline">
+              {customer?.isLoggedIn 
+                ? customer.name.split(' ')[0]
+                : (lang === 'ar' ? 'حسابي (ضيف المول)' : 'Account (Guest)')}
+            </span>
+            {customer?.isLoggedIn && (
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping hidden md:inline-block" />
+            )}
+          </button>
+
           {/* Wholesale RFQ Basket Button */}
           <button
             onClick={onOpenRfqModal}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500/20 text-xs font-extrabold transition"
+            className="hidden xl:flex items-center gap-1.5 px-3 py-2 rounded-xl bg-pink-500/10 border border-pink-500/30 text-pink-400 hover:bg-pink-500/20 text-xs font-extrabold transition"
           >
-            <Building2 className="w-4 h-4" />
-            <span>{lang === 'ar' ? 'طلب توريد RFQ' : 'B2B RFQ'}</span>
+            <Building2 className="w-3.5 h-3.5" />
+            <span>{lang === 'ar' ? 'طلب RFQ' : 'B2B RFQ'}</span>
           </button>
 
           {/* List Your Brand CTA */}
           <button
             onClick={onOpenOnboardModal}
-            className="gmt-gradient-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-black flex items-center gap-1.5 shadow-lg shadow-cyan-500/20"
+            className="gmt-gradient-btn px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-black flex items-center gap-1.5 shadow-lg shadow-cyan-500/20"
           >
             <PlusCircle className="w-4 h-4" />
             <span className="hidden sm:inline">{lang === 'ar' ? 'سجّل علاماتك' : 'List Brand'}</span>
@@ -187,29 +252,55 @@ export default function Header({
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-[color:var(--hairline)] bg-[color:var(--bg-surface)] p-4 space-y-2 animate-in slide-in-from-top duration-200">
+          
+          {/* Account status in mobile drawer */}
+          <button
+            onClick={() => { setIsAccountModalOpen(true); setMobileMenuOpen(false); }}
+            className="w-full p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-xs text-left rtl:text-right flex items-center justify-between text-cyan-200 mb-2"
+          >
+            <div className="flex items-center gap-2">
+              <User className="w-4 h-4 text-cyan-400" />
+              <span>
+                {customer?.isLoggedIn 
+                  ? (lang === 'ar' ? `حساب: ${customer.name}` : `Account: ${customer.name}`)
+                  : (lang === 'ar' ? 'حسابي (وضع ضيف المول المفتوح)' : 'My Account (Open Guest Mode)')}
+              </span>
+            </div>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 font-bold">
+              {customer?.isLoggedIn ? (lang === 'ar' ? 'موثق' : 'Verified') : (lang === 'ar' ? 'تصفح حر' : 'Guest')}
+            </span>
+          </button>
+
           <button
             onClick={() => { setActiveTab('explore'); setMobileMenuOpen(false); }}
-            className={`w-full text-left px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'explore' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
+            className={`w-full text-left rtl:text-right px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'explore' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
           >
             🛍️ {lang === 'ar' ? 'تصفح البراندات المصرية' : 'Explore Mall Brands'}
           </button>
           <button
             onClick={() => { setActiveTab('silkroad'); setMobileMenuOpen(false); }}
-            className={`w-full text-left px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'silkroad' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
+            className={`w-full text-left rtl:text-right px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'silkroad' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
           >
             🚢 {lang === 'ar' ? 'طريق الحرير للتصدير (B2B)' : 'Silk Road Wholesale (B2B)'}
           </button>
           <button
             onClick={() => { setActiveTab('finder'); setMobileMenuOpen(false); }}
-            className={`w-full text-left px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'finder' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
+            className={`w-full text-left rtl:text-right px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'finder' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
           >
             ✨ {lang === 'ar' ? 'مكتشف البديل المحلي AI' : 'AI Local Brand Finder'}
           </button>
           <button
             onClick={() => { setActiveTab('map'); setMobileMenuOpen(false); }}
-            className={`w-full text-left px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'map' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
+            className={`w-full text-left rtl:text-right px-4 py-3 rounded-xl text-sm font-extrabold ${activeTab === 'map' ? 'bg-gradient-to-r from-cyan-400 to-blue-500 text-white' : 'text-[color:var(--ink)]'}`}
           >
             📍 {lang === 'ar' ? 'خريطة المحافظات والمنتجات' : 'Governorates Origin Map'}
+          </button>
+
+          <button
+            onClick={() => { onOpenRfqModal(); setMobileMenuOpen(false); }}
+            className="w-full text-left rtl:text-right px-4 py-3 rounded-xl text-sm font-extrabold text-pink-400 bg-pink-500/10 border border-pink-500/30"
+          >
+            🏢 {lang === 'ar' ? 'طلب توريد جملة وتصدير (B2B RFQ)' : 'Wholesale B2B RFQ'}
           </button>
         </div>
       )}

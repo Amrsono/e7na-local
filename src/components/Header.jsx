@@ -202,26 +202,28 @@ export default function Header({
             )}
           </button>
 
-          {/* Mall Account Button (Explaining Open Guest Mode vs Logged In) */}
-          <button
-            onClick={() => setIsAccountModalOpen(true)}
-            className={`px-3 py-2 rounded-xl border text-xs font-bold transition flex items-center gap-1.5 ${
-              customer?.isLoggedIn 
-                ? 'border-emerald-400/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
-                : 'border-[color:var(--hairline)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--ink)] hover:border-cyan-400/50'
-            }`}
-            title={customer?.isLoggedIn ? 'Customer Mall Account' : 'Mall Guest Mode — Browse Freely'}
-          >
-            <User className={`w-3.5 h-3.5 ${customer?.isLoggedIn ? 'text-emerald-400' : 'text-cyan-400'}`} />
-            <span className="hidden md:inline">
-              {customer?.isLoggedIn 
-                ? customer.name.split(' ')[0]
-                : (lang === 'ar' ? 'حسابي (ضيف المول)' : 'Account (Guest)')}
-            </span>
-            {customer?.isLoggedIn && (
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping hidden md:inline-block" />
-            )}
-          </button>
+          {/* Mall Account Button (Hidden when Admin is logged in) */}
+          {!adminUser?.isLoggedIn && (
+            <button
+              onClick={() => setIsAccountModalOpen(true)}
+              className={`px-3 py-2 rounded-xl border text-xs font-bold transition flex items-center gap-1.5 ${
+                customer?.isLoggedIn 
+                  ? 'border-emerald-400/40 bg-emerald-500/10 text-emerald-300 hover:bg-emerald-500/20'
+                  : 'border-[color:var(--hairline)] bg-[color:var(--bg-surface-elevated)] text-[color:var(--ink)] hover:border-cyan-400/50'
+              }`}
+              title={customer?.isLoggedIn ? 'Customer Mall Account' : 'Mall Guest Mode — Browse Freely'}
+            >
+              <User className={`w-3.5 h-3.5 ${customer?.isLoggedIn ? 'text-emerald-400' : 'text-cyan-400'}`} />
+              <span className="hidden md:inline">
+                {customer?.isLoggedIn 
+                  ? customer.name.split(' ')[0]
+                  : (lang === 'ar' ? 'حسابي (ضيف المول)' : 'Account (Guest)')}
+              </span>
+              {customer?.isLoggedIn && (
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping hidden md:inline-block" />
+              )}
+            </button>
+          )}
 
           {/* Admin Command Center Button */}
           <button
@@ -283,23 +285,25 @@ export default function Header({
       {mobileMenuOpen && (
         <div className="lg:hidden border-t border-[color:var(--hairline)] bg-[color:var(--bg-surface)] p-4 space-y-2 animate-in slide-in-from-top duration-200">
           
-          {/* Account status in mobile drawer */}
-          <button
-            onClick={() => { setIsAccountModalOpen(true); setMobileMenuOpen(false); }}
-            className="w-full p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-xs text-left rtl:text-right flex items-center justify-between text-cyan-200 mb-2"
-          >
-            <div className="flex items-center gap-2">
-              <User className="w-4 h-4 text-cyan-400" />
-              <span>
-                {customer?.isLoggedIn 
-                  ? (lang === 'ar' ? `حساب: ${customer.name}` : `Account: ${customer.name}`)
-                  : (lang === 'ar' ? 'حسابي (وضع ضيف المول المفتوح)' : 'My Account (Open Guest Mode)')}
+          {/* Account status in mobile drawer (Hidden when Admin is logged in) */}
+          {!adminUser?.isLoggedIn && (
+            <button
+              onClick={() => { setIsAccountModalOpen(true); setMobileMenuOpen(false); }}
+              className="w-full p-3 rounded-xl bg-cyan-950/30 border border-cyan-500/30 text-xs text-left rtl:text-right flex items-center justify-between text-cyan-200 mb-2"
+            >
+              <div className="flex items-center gap-2">
+                <User className="w-4 h-4 text-cyan-400" />
+                <span>
+                  {customer?.isLoggedIn 
+                    ? (lang === 'ar' ? `حساب: ${customer.name}` : `Account: ${customer.name}`)
+                    : (lang === 'ar' ? 'حسابي (وضع ضيف المول المفتوح)' : 'My Account (Open Guest Mode)')}
+                </span>
+              </div>
+              <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 font-bold">
+                {customer?.isLoggedIn ? (lang === 'ar' ? 'موثق' : 'Verified') : (lang === 'ar' ? 'تصفح حر' : 'Guest')}
               </span>
-            </div>
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/20 font-bold">
-              {customer?.isLoggedIn ? (lang === 'ar' ? 'موثق' : 'Verified') : (lang === 'ar' ? 'تصفح حر' : 'Guest')}
-            </span>
-          </button>
+            </button>
+          )}
 
           <button
             onClick={() => { setActiveTab('explore'); setMobileMenuOpen(false); }}

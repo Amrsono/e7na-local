@@ -28,13 +28,16 @@ export default function Header({
   setCurrency, 
   onOpenOnboardModal,
   onOpenRfqModal,
+  onOpenAdmin,
   activeTab,
   setActiveTab
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { 
     customer, 
+    adminUser,
     setIsAccountModalOpen, 
+    setIsAdminLoginModalOpen,
     totalBasketItemsCount, 
     outletBaskets,
     setActiveOutletBasketBrand 
@@ -220,6 +223,33 @@ export default function Header({
             )}
           </button>
 
+          {/* Admin Command Center Button */}
+          <button
+            onClick={() => {
+              if (adminUser?.isLoggedIn) {
+                if (onOpenAdmin) onOpenAdmin();
+              } else {
+                setIsAdminLoginModalOpen(true);
+              }
+            }}
+            className={`px-3 py-2 rounded-xl border text-xs font-black transition flex items-center gap-1.5 ${
+              adminUser?.isLoggedIn
+                ? 'border-amber-400/50 bg-gradient-to-r from-amber-500/20 to-cyan-500/20 text-amber-300 shadow-md shadow-amber-500/10 hover:border-amber-400'
+                : 'border-white/10 bg-white/5 text-slate-400 hover:text-white hover:border-cyan-400/40'
+            }`}
+            title="Admin Command Center (Username: Admin / Password: Password@26)"
+          >
+            <ShieldCheck className={`w-3.5 h-3.5 ${adminUser?.isLoggedIn ? 'text-amber-400' : 'text-slate-400'}`} />
+            <span className="hidden md:inline">
+              {adminUser?.isLoggedIn 
+                ? (lang === 'ar' ? 'لوحة التحكم' : 'Admin Panel') 
+                : (lang === 'ar' ? 'دخول الإدارة' : 'Admin')}
+            </span>
+            {adminUser?.isLoggedIn && (
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse hidden md:inline-block" />
+            )}
+          </button>
+
           {/* Wholesale RFQ Basket Button */}
           <button
             onClick={onOpenRfqModal}
@@ -301,6 +331,27 @@ export default function Header({
             className="w-full text-left rtl:text-right px-4 py-3 rounded-xl text-sm font-extrabold text-pink-400 bg-pink-500/10 border border-pink-500/30"
           >
             🏢 {lang === 'ar' ? 'طلب توريد جملة وتصدير (B2B RFQ)' : 'Wholesale B2B RFQ'}
+          </button>
+
+          {/* Admin Command Center in Mobile Menu */}
+          <button
+            onClick={() => {
+              setMobileMenuOpen(false);
+              if (adminUser?.isLoggedIn) {
+                if (onOpenAdmin) onOpenAdmin();
+              } else {
+                setIsAdminLoginModalOpen(true);
+              }
+            }}
+            className="w-full text-left rtl:text-right px-4 py-3 rounded-xl text-sm font-black text-amber-300 bg-amber-500/10 border border-amber-500/30 flex items-center justify-between"
+          >
+            <div className="flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-amber-400" />
+              <span>{lang === 'ar' ? 'لوحة تحكم الإدارة المركزية (Admin)' : 'Admin Command Center'}</span>
+            </div>
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-300 font-mono">
+              {adminUser?.isLoggedIn ? 'Active' : 'Login'}
+            </span>
           </button>
         </div>
       )}

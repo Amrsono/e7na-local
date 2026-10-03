@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { X, Send, Building2, CheckCircle2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useMall } from '../context/MallContext';
 
 export default function RfqModal({ brand, lang, onClose }) {
+  const { submitRfq } = useMall();
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     buyerName: '',
@@ -17,6 +19,11 @@ export default function RfqModal({ brand, lang, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    submitRfq({
+      ...formData,
+      brandId: brand?.id || null,
+      brandName: brand?.nameEn || 'General Egyptian Factory RFQ'
+    });
     setSubmitted(true);
     confetti({
       particleCount: 80,

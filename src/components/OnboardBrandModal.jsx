@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { X, PlusCircle, CheckCircle2, ShieldCheck, Building2, MapPin, Globe } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { GOVERNORATES, CATEGORIES } from '../data/brandsData';
+import { useMall } from '../context/MallContext';
 
 export default function OnboardBrandModal({ lang, onClose }) {
+  const { submitApplication } = useMall();
   const [submitted, setSubmitted] = useState(false);
   const [brandForm, setBrandForm] = useState({
     brandName: '',
@@ -17,6 +19,7 @@ export default function OnboardBrandModal({ lang, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    submitApplication(brandForm);
     setSubmitted(true);
     confetti({
       particleCount: 90,

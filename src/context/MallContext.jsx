@@ -458,7 +458,7 @@ export function MallProvider({ children }) {
     }
     return { 
       success: false, 
-      error: 'Invalid credentials. Expected Username: Admin & Password: Password@26' 
+      error: 'Invalid username or password.' 
     };
   };
 

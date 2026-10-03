@@ -237,7 +237,7 @@ export default function Header({
                 ? 'border-amber-400/50 bg-gradient-to-r from-amber-500/20 to-cyan-500/20 text-amber-300 shadow-md shadow-amber-500/10 hover:border-amber-400'
                 : 'border-white/10 bg-white/5 text-slate-400 hover:text-white hover:border-cyan-400/40'
             }`}
-            title="Admin Command Center (Username: Admin / Password: Password@26)"
+            title={lang === 'ar' ? 'لوحة تحكم الإدارة المركزية' : 'Admin Command Center'}
           >
             <ShieldCheck className={`w-3.5 h-3.5 ${adminUser?.isLoggedIn ? 'text-amber-400' : 'text-slate-400'}`} />
             <span className="hidden md:inline">

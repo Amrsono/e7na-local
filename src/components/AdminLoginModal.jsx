@@ -6,8 +6,6 @@ import {
   X, 
   Eye, 
   EyeOff, 
-  KeyRound, 
-  Zap, 
   AlertCircle,
   Building2,
   Sparkles
@@ -41,12 +39,6 @@ export default function AdminLoginModal({ lang = 'en', onClose, onSuccess }) {
         );
       }
     }, 350);
-  };
-
-  const handleQuickFill = () => {
-    setUsername('Admin');
-    setPassword('Password@26');
-    setErrorMsg('');
   };
 
   return (
@@ -90,34 +82,6 @@ export default function AdminLoginModal({ lang = 'en', onClose, onSuccess }) {
             : 'Access brand onboarding, outlet dispatch orders, and Silk Road wholesale RFQs.'}
         </p>
 
-        {/* Quick Credentials Info Box */}
-        <div className="mt-4 p-3 rounded-2xl bg-cyan-950/30 border border-cyan-500/30 text-xs">
-          <div className="flex items-center justify-between text-cyan-300 font-semibold mb-1">
-            <span className="flex items-center gap-1.5">
-              <KeyRound className="w-3.5 h-3.5 text-amber-400" />
-              <span>{lang === 'ar' ? 'بيانات الاعتماد الرسمية:' : 'Authorized Credentials:'}</span>
-            </span>
-            <button
-              type="button"
-              onClick={handleQuickFill}
-              className="text-[10px] px-2 py-0.5 rounded-lg bg-amber-400/20 hover:bg-amber-400/30 text-amber-300 font-black border border-amber-400/40 transition flex items-center gap-1"
-            >
-              <Zap className="w-3 h-3" />
-              <span>{lang === 'ar' ? 'تعبئة سريعة' : 'Quick Fill'}</span>
-            </button>
-          </div>
-          <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300 font-mono mt-1">
-            <div className="bg-slate-900/60 p-1.5 rounded-lg border border-white/5">
-              <span className="text-slate-500 text-[10px] block">Username:</span>
-              <strong className="text-cyan-400">Admin</strong>
-            </div>
-            <div className="bg-slate-900/60 p-1.5 rounded-lg border border-white/5">
-              <span className="text-slate-500 text-[10px] block">Password:</span>
-              <strong className="text-amber-400">Password@26</strong>
-            </div>
-          </div>
-        </div>
-
         {/* Error message */}
         {errorMsg && (
           <div className="mt-3 p-3 rounded-xl bg-red-500/15 border border-red-500/30 text-red-300 text-xs flex items-center gap-2">
@@ -140,7 +104,7 @@ export default function AdminLoginModal({ lang = 'en', onClose, onSuccess }) {
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="Admin"
+                placeholder={lang === 'ar' ? 'أدخل اسم المستخدم' : 'Enter username'}
                 required
                 className="w-full pl-9 rtl:pl-3 rtl:pr-9 pr-3 py-2.5 rounded-xl bg-slate-900/80 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 transition"
               />
@@ -159,14 +123,14 @@ export default function AdminLoginModal({ lang = 'en', onClose, onSuccess }) {
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Password@26"
+                placeholder={lang === 'ar' ? 'أدخل كلمة المرور' : '••••••••'}
                 required
                 className="w-full pl-9 rtl:pl-10 rtl:pr-9 pr-10 py-2.5 rounded-xl bg-slate-900/80 border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-cyan-400 transition"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-0 rtl:right-auto rtl:left-0 pr-3 rtl:pr-0 rtl:pl-3 flex items-center text-slate-400 hover:text-slate-200 transition"
+                className="absolute inset-y-0 right-0 rtl:right-auto rtl:left-0 pr-3 rtl:pr-0 rtl:pl-3 flex items-center text-slate-400 hover:text-slate-200 transition cursor-pointer"
                 aria-label="Toggle password visibility"
               >
                 {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}

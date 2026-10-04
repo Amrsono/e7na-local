@@ -427,15 +427,18 @@ export function MallProvider({ children }) {
   }, [outletBaskets]);
 
   // ================= ADMIN AUTHENTICATION =================
-  // Required: Username: Admin, Password: Password@26
+  // Admin credentials: can be configured via VITE_ADMIN_USERNAME / VITE_ADMIN_PASSWORD (.env), default fallback Admin / Password@26
   const loginAdmin = (username, password) => {
     const cleanUser = (username || '').trim();
     const cleanPass = (password || '').trim();
 
-    if (cleanUser.toLowerCase() === 'admin' && cleanPass === 'Password@26') {
+    const expectedUser = (import.meta.env.VITE_ADMIN_USERNAME || 'Admin').trim().toLowerCase();
+    const expectedPass = (import.meta.env.VITE_ADMIN_PASSWORD || 'Password@26').trim();
+
+    if (cleanUser.toLowerCase() === expectedUser && cleanPass === expectedPass) {
       const user = {
         isLoggedIn: true,
-        username: 'Admin',
+        username: import.meta.env.VITE_ADMIN_USERNAME || 'Admin',
         role: 'SUPER_ADMIN',
         roleLabel: 'مدير عام منصة إحنا لوكال للتصدير والمعارض',
         roleLabelEn: 'Super Admin (Mall & Export Director)',

@@ -1,0 +1,21 @@
+node_modules
+dist
+dist-ssr
+.git
+.github
+.vscode
+.idea
+*.local
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+Dockerfile*
+docker-compose*
+README.md
+to do.txt
+.DS_Store

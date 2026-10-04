@@ -42,8 +42,8 @@ export default function AdminLoginModal({ lang = 'en', onClose, onSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto animate-in fade-in duration-200">
-      <div className="w-full max-w-md rounded-3xl border border-cyan-500/30 bg-[#070c1a] p-6 sm:p-8 shadow-2xl relative overflow-hidden text-left rtl:text-right">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto overflow-x-hidden animate-in fade-in duration-200" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="w-full max-w-md rounded-3xl border border-cyan-500/30 bg-[#070c1a] p-5 sm:p-8 shadow-2xl relative overflow-hidden min-w-0 text-left rtl:text-right">
         
         {/* Neon Top Glowing Cyber Stripe */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-amber-400 to-pink-500" />

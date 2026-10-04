@@ -70,9 +70,6 @@ body {
   -webkit-overflow-scrolling: touch;
   transition: background-color 0.3s ease, color 0.3s ease;
   padding-bottom: env(safe-area-inset-bottom);
-  /* Tells browser we only scroll vertically — compositor can handle it
-     directly without waiting for the main JS thread on each frame */
-  touch-action: pan-y;
 }
 
 /* ── Background mesh glow ───────────────────────────────────────── */

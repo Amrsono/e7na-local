@@ -102,8 +102,8 @@ export default function BrandEditModal({ brand, lang = 'en', onClose, onSave }) 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto animate-in fade-in duration-200">
-      <div className="w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl border border-white/15 bg-[#090f1e] shadow-2xl relative overflow-hidden text-left rtl:text-right">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto overflow-x-hidden animate-in fade-in duration-200" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="w-full max-w-4xl max-h-[92vh] flex flex-col rounded-3xl border border-white/15 bg-[#090f1e] shadow-2xl relative overflow-hidden min-w-0 text-left rtl:text-right">
         
         {/* Header Bar */}
         <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between shrink-0 bg-slate-900/60">

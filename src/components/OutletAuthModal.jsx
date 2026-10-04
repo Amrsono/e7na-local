@@ -118,8 +118,8 @@ export default function OutletAuthModal({ lang, currency }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-      <div className="gmt-panel w-full max-w-2xl max-h-[92vh] overflow-y-auto rounded-3xl border border-amber-400/50 bg-[color:var(--bg-surface)] shadow-2xl relative animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto overflow-x-hidden" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="gmt-panel w-full max-w-2xl max-h-[92vh] overflow-y-auto overflow-x-hidden min-w-0 rounded-3xl border border-amber-400/50 bg-[color:var(--bg-surface)] shadow-2xl relative animate-in fade-in zoom-in duration-200">
         
         {/* Close button */}
         <button

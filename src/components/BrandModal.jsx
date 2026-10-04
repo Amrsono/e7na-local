@@ -67,80 +67,80 @@ export default function BrandModal({ brand, lang, currency, onClose, onRequestRf
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-      <div className="gmt-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-400/40 relative bg-[color:var(--bg-surface)] shadow-2xl animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto overflow-x-hidden" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="gmt-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto overflow-x-hidden min-w-0 rounded-3xl border border-amber-400/40 relative bg-[color:var(--bg-surface)] shadow-2xl animate-in fade-in zoom-in duration-200">
         
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-20 p-2 rounded-full bg-slate-950/70 border border-white/20 text-white hover:bg-slate-950 transition"
+          className="absolute top-3.5 right-3.5 sm:top-4 sm:right-4 z-20 p-2 rounded-full bg-slate-950/70 border border-white/20 text-white hover:bg-slate-950 transition"
           aria-label="Close"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Cover & Brand Banner */}
-        <div className="relative h-64 sm:h-80 w-full overflow-hidden bg-slate-900">
+        <div className="relative h-60 sm:h-80 w-full overflow-hidden bg-slate-900 shrink-0">
           <img src={brand.coverImage} alt={brand.nameEn} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#070c18] via-[#070c18]/40 to-transparent" />
           
           {/* Top Outlet Mode Indicator */}
-          <div className="absolute top-4 left-4 z-10">
-            <span className="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-amber-400/40 text-amber-300 text-xs font-bold flex items-center gap-1.5 shadow-lg">
-              <Building2 className="w-3.5 h-3.5 text-amber-400" />
-              <span>{lang === 'ar' ? 'معرض البراند في مول إحنا — تصفح حر بدون تسجيل' : 'Brand Outlet in e7na Mall — Free Open Browsing'}</span>
+          <div className="absolute top-3.5 left-3.5 right-14 sm:top-4 sm:left-4 z-10 pointer-events-none">
+            <span className="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-amber-400/40 text-amber-300 text-xs font-bold inline-flex items-center gap-1.5 shadow-lg max-w-full">
+              <Building2 className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+              <span className="truncate">{lang === 'ar' ? 'معرض البراند في مول إحنا — تصفح حر بدون تسجيل' : 'Brand Outlet in e7na Mall — Free Open Browsing'}</span>
             </span>
           </div>
 
-          <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
-            <div className="flex items-center gap-4">
-              <img src={brand.logoImage} alt={brand.nameEn} className="w-20 h-20 rounded-2xl border-2 border-amber-400 shadow-2xl object-cover bg-slate-900" />
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-bold flex items-center gap-1">
-                    <ShieldCheck className="w-3.5 h-3.5" />
+          <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 flex items-end justify-between">
+            <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+              <img src={brand.logoImage} alt={brand.nameEn} className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl border-2 border-amber-400 shadow-2xl object-cover bg-slate-900 shrink-0" />
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-bold flex items-center gap-1">
+                    <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
                     <span>{lang === 'ar' ? 'مصري 100%' : '100% Egyptian'}</span>
                   </span>
                   <span className="text-xs text-amber-400 font-bold">Est. {brand.establishedYear}</span>
                 </div>
-                <h2 className="text-2xl sm:text-4xl font-black text-white mt-1">
+                <h2 className="text-xl sm:text-4xl font-black text-white mt-1 truncate">
                   {lang === 'ar' ? brand.nameAr : brand.nameEn}
                 </h2>
-                <p className="text-sm text-slate-300 font-semibold">{lang === 'ar' ? brand.taglineAr : brand.taglineEn}</p>
+                <p className="text-xs sm:text-sm text-slate-300 font-semibold line-clamp-1">{lang === 'ar' ? brand.taglineAr : brand.taglineEn}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Modal Content Details */}
-        <div className="p-6 sm:p-8 space-y-6">
+        <div className="p-4 sm:p-8 space-y-5 sm:space-y-6 min-w-0">
           
           {/* Key Quick Facts Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)]">
-              <div className="text-[color:var(--ink-muted)]">{lang === 'ar' ? 'مقر المصنع/المحيط:' : 'Origin Governorate:'}</div>
-              <div className="font-bold text-amber-400 mt-1 flex items-center gap-1">
-                <MapPin className="w-3.5 h-3.5" />
-                <span>{lang === 'ar' ? brand.locationAr : brand.locationEn}</span>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 text-xs">
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)] min-w-0 overflow-hidden">
+              <div className="text-[color:var(--ink-muted)] truncate">{lang === 'ar' ? 'مقر المصنع/المحيط:' : 'Origin Governorate:'}</div>
+              <div className="font-bold text-amber-400 mt-1 flex items-center gap-1 truncate">
+                <MapPin className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">{lang === 'ar' ? brand.locationAr : brand.locationEn}</span>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)]">
-              <div className="text-[color:var(--ink-muted)]">{lang === 'ar' ? 'الاعتمادات والجودة:' : 'Certifications:'}</div>
-              <div className="font-bold text-emerald-400 mt-1 flex items-center gap-1">
-                <Award className="w-3.5 h-3.5" />
-                <span>{brand.certification}</span>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)] min-w-0 overflow-hidden">
+              <div className="text-[color:var(--ink-muted)] truncate">{lang === 'ar' ? 'الاعتمادات والجودة:' : 'Certifications:'}</div>
+              <div className="font-bold text-emerald-400 mt-1 flex items-center gap-1 truncate">
+                <Award className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">{brand.certification}</span>
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)]">
-              <div className="text-[color:var(--ink-muted)]">{lang === 'ar' ? 'حد التصدير الأدنى (MOQ):' : 'Export MOQ:'}</div>
-              <div className="font-bold text-cyan-400 mt-1">{brand.moq}</div>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)] min-w-0 overflow-hidden">
+              <div className="text-[color:var(--ink-muted)] truncate">{lang === 'ar' ? 'حد التصدير الأدنى (MOQ):' : 'Export MOQ:'}</div>
+              <div className="font-bold text-cyan-400 mt-1 truncate">{brand.moq}</div>
             </div>
 
-            <div className="p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)]">
-              <div className="text-[color:var(--ink-muted)]">{lang === 'ar' ? 'ميناء التجميع الشاحن:' : 'FOB Sea Port:'}</div>
-              <div className="font-bold text-[color:var(--ink)] mt-1">{brand.fobPort}</div>
+            <div className="p-2.5 sm:p-3 rounded-xl bg-[color:var(--bg-overlay)] border border-[color:var(--hairline)] min-w-0 overflow-hidden">
+              <div className="text-[color:var(--ink-muted)] truncate">{lang === 'ar' ? 'ميناء التجميع الشاحن:' : 'FOB Sea Port:'}</div>
+              <div className="font-bold text-[color:var(--ink)] mt-1 truncate">{brand.fobPort}</div>
             </div>
           </div>
 
@@ -218,16 +218,16 @@ export default function BrandModal({ brand, lang, currency, onClose, onRequestRf
 
           {/* Active Outlet Basket Sticky Dock (if items added) */}
           {currentOutletItemCount > 0 && (
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 via-cyan-500/20 to-amber-500/20 border-2 border-amber-400/60 flex flex-wrap items-center justify-between gap-4 animate-in slide-in-from-bottom duration-300">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black">
+            <div className="p-3.5 sm:p-4 rounded-2xl bg-gradient-to-r from-amber-500/20 via-cyan-500/20 to-amber-500/20 border-2 border-amber-400/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 animate-in slide-in-from-bottom duration-300">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-black shrink-0">
                   <ShoppingBag className="w-5 h-5" />
                 </div>
-                <div>
-                  <h4 className="text-xs font-black text-[color:var(--ink)]">
+                <div className="min-w-0">
+                  <h4 className="text-xs font-black text-[color:var(--ink)] truncate">
                     {lang === 'ar' ? `سلة معرض ${brand.nameAr}` : `${brand.nameEn} Outlet Basket`}
                   </h4>
-                  <p className="text-xs text-amber-400 font-bold">
+                  <p className="text-xs text-amber-400 font-bold truncate">
                     {currentOutletItemCount} {lang === 'ar' ? 'قطع مضافة' : 'items added'} • {currentOutletTotalEgp.toLocaleString()} ج.م
                   </p>
                 </div>
@@ -235,24 +235,24 @@ export default function BrandModal({ brand, lang, currency, onClose, onRequestRf
 
               <button
                 onClick={handleOpenOutletBasket}
-                className="px-5 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-black text-xs hover:bg-amber-300 transition flex items-center gap-1.5 shadow-lg shadow-amber-400/20"
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-amber-400 text-slate-950 font-black text-xs hover:bg-amber-300 transition flex items-center justify-center gap-1.5 shadow-lg shadow-amber-400/20 shrink-0 text-center"
               >
                 <span>{lang === 'ar' ? 'عرض سلة المعرض وإتمام الطلب' : 'View Basket & Checkout'}</span>
-                {isRtl ? <ArrowLeft className="w-4 h-4" /> : <ArrowRight className="w-4 h-4" />}
+                {isRtl ? <ArrowLeft className="w-4 h-4 shrink-0" /> : <ArrowRight className="w-4 h-4 shrink-0" />}
               </button>
             </div>
           )}
 
           {/* Bottom Action Drawer */}
-          <div className="pt-6 border-t border-[color:var(--hairline)] flex flex-wrap gap-3">
+          <div className="pt-4 sm:pt-6 border-t border-[color:var(--hairline)] flex flex-col sm:flex-row gap-3">
             
             {/* View Outlet Basket if items present */}
             {currentOutletItemCount > 0 ? (
               <button
                 onClick={handleOpenOutletBasket}
-                className="flex-1 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-sm font-black flex items-center justify-center gap-2 hover:opacity-90 transition shadow-lg shadow-cyan-500/20"
+                className="w-full sm:flex-1 py-3.5 px-4 rounded-xl bg-gradient-to-r from-cyan-400 to-blue-500 text-white text-sm font-black flex items-center justify-center gap-2 hover:opacity-90 transition shadow-lg shadow-cyan-500/20 text-center"
               >
-                <ShoppingBag className="w-4 h-4" />
+                <ShoppingBag className="w-4 h-4 shrink-0" />
                 <span>{lang === 'ar' ? `فتح سلة المعرض (${currentOutletItemCount})` : `Open Outlet Basket (${currentOutletItemCount})`}</span>
               </button>
             ) : (
@@ -262,9 +262,9 @@ export default function BrandModal({ brand, lang, currency, onClose, onRequestRf
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={triggerConfetti}
-                className="flex-1 py-3.5 rounded-xl bg-amber-400 text-slate-950 text-sm font-black flex items-center justify-center gap-2 hover:bg-amber-300 transition shadow-lg shadow-amber-400/20"
+                className="w-full sm:flex-1 py-3.5 px-4 rounded-xl bg-amber-400 text-slate-950 text-sm font-black flex items-center justify-center gap-2 hover:bg-amber-300 transition shadow-lg shadow-amber-400/20 text-center"
               >
-                <ExternalLink className="w-4 h-4" />
+                <ExternalLink className="w-4 h-4 shrink-0" />
                 <span>{lang === 'ar' ? 'الانتقال المباشر لمتجر البراند (Digital Link)' : 'Direct Link to Official Store'}</span>
               </a>
             )}
@@ -272,9 +272,9 @@ export default function BrandModal({ brand, lang, currency, onClose, onRequestRf
             {/* Wholesale RFQ Quote */}
             <button
               onClick={() => { onClose(); onRequestRfq(brand); }}
-              className="px-6 py-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 text-sm font-extrabold flex items-center gap-2 transition"
+              className="w-full sm:w-auto px-5 sm:px-6 py-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 text-sm font-extrabold flex items-center justify-center gap-2 transition text-center"
             >
-              <Building2 className="w-4 h-4" />
+              <Building2 className="w-4 h-4 shrink-0" />
               <span>{lang === 'ar' ? 'طلب تسعيرة جملة / تصدير' : 'Request Wholesale Quote'}</span>
             </button>
           </div>

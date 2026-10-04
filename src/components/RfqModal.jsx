@@ -37,8 +37,8 @@ export default function RfqModal({ brand, lang, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
-      <div className="w-full max-w-2xl rounded-3xl border border-white/12 bg-[#090f1d] p-6 sm:p-9 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto overflow-x-hidden" style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className="w-full max-w-2xl rounded-3xl border border-white/12 bg-[#090f1d] p-4 sm:p-9 shadow-2xl relative overflow-hidden min-w-0 animate-in fade-in zoom-in-95 duration-200">
         
         {/* Subtle Top Glow Accent Bar */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 opacity-90" />

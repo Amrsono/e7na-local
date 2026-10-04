@@ -49,9 +49,9 @@ export default function OutletBasketDrawer({ lang, currency }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/70 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex justify-end bg-slate-950/70 backdrop-blur-sm overflow-x-hidden animate-in fade-in duration-200">
       <div 
-        className="w-full max-w-md h-full bg-[color:var(--bg-surface)] border-l border-[color:var(--hairline)] flex flex-col justify-between shadow-2xl relative animate-in slide-in-from-right duration-300"
+        className="w-full max-w-full sm:max-w-md h-full bg-[color:var(--bg-surface)] border-l border-[color:var(--hairline)] flex flex-col justify-between shadow-2xl relative overflow-x-hidden min-w-0 animate-in slide-in-from-right duration-300"
       >
         {/* Drawer Header */}
         <div className="p-5 border-b border-[color:var(--hairline)] bg-[color:var(--bg-surface-elevated)] flex items-center justify-between">

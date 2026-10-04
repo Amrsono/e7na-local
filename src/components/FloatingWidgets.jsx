@@ -40,8 +40,8 @@ export default function FloatingWidgets({ lang, onOpenRfq }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Export Desk WhatsApp"
-        className="fixed bottom-6 left-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition-transform hover:scale-110 hover:opacity-90 border-2 border-white/20"
-        title="WhatsApp Export Desk"
+        className="fixed bottom-6 left-6 z-40 flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition-transform hover:scale-110 hover:opacity-90 border-2 border-white/20"
+        style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}
       >
         <svg width="30" height="30" viewBox="0 0 32 32" fill="#fff">
           <path d="M16.004 2.667c-7.36 0-13.333 5.973-13.333 13.333 0 2.351.616 4.652 1.787 6.681L2.667 29.333l6.84-1.793a13.27 13.27 0 0 0 6.497 1.655h.005c7.36 0 13.333-5.973 13.333-13.333 0-3.563-1.387-6.913-3.907-9.433-2.52-2.52-5.87-3.762-9.431-3.762zm0 24.146h-.004a11.03 11.03 0 0 1-5.62-1.539l-.403-.239-4.06 1.065 1.083-3.957-.262-.406a11.01 11.01 0 0 1-1.688-5.876c0-6.116 4.977-11.093 11.097-11.093 2.963 0 5.749 1.155 7.843 3.251a11.02 11.02 0 0 1 3.247 7.846c0 6.117-4.977 11.093-11.093 11.093z"></path>
@@ -49,11 +49,11 @@ export default function FloatingWidgets({ lang, onOpenRfq }) {
       </a>
 
       {/* Bottom Right AI Assistant Widget */}
-      <div className="fixed bottom-6 right-6 z-40">
+      <div className="fixed right-4 sm:right-6 z-40" style={{ bottom: 'calc(1.5rem + env(safe-area-inset-bottom))' }}>
         {!aiOpen ? (
           <button
             onClick={() => setAiOpen(true)}
-            className="flex h-14 w-14 items-center justify-center rounded-full gmt-gradient-btn text-slate-950 font-black shadow-xl hover:scale-110 transition-transform relative group"
+            className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full gmt-gradient-btn text-slate-950 font-black shadow-xl hover:scale-110 transition-transform relative group"
             aria-label="AI Brand Assistant"
           >
             <Bot className="w-7 h-7" />
@@ -63,7 +63,7 @@ export default function FloatingWidgets({ lang, onOpenRfq }) {
             </span>
           </button>
         ) : (
-          <div className="w-[340px] sm:w-[380px] h-[450px] rounded-3xl gmt-panel border border-amber-400/40 shadow-2xl flex flex-col justify-between overflow-hidden bg-[color:var(--bg-surface)] animate-in slide-in-from-bottom duration-200">
+          <div className="w-[calc(100vw-3rem)] max-w-[340px] sm:max-w-[380px] h-[420px] sm:h-[450px] rounded-3xl gmt-panel border border-amber-400/40 shadow-2xl flex flex-col justify-between overflow-hidden bg-[color:var(--bg-surface)] animate-in slide-in-from-bottom duration-200">
             
             {/* AI Drawer Header */}
             <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 text-slate-950 flex items-center justify-between">

@@ -7,11 +7,18 @@
 }
 
 /* Font Smoothing & Subpixel Antialiasing */
-html, body {
+html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   letter-spacing: -0.011em;
+  /* Allow iOS rubber-band scroll on the document */
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 [data-theme="dark"] {
@@ -56,13 +63,23 @@ html, body, #root {
   padding: 0;
 }
 
+/* Scope overflow-x clipping to #root to avoid blocking iOS body scroll */
+#root {
+  overflow-x: hidden;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-primary);
   color: var(--ink);
   min-height: 100vh;
+  /* Don't clip body overflow-y — needed for iOS scroll to work */
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
+  /* Respect device safe area (notch, home indicator) */
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
 }
 
 /* Background mesh glow with Cyberpunk Neon Orbs & Grid lines */
@@ -174,4 +191,47 @@ body {
 /* RTL Support for Arabic */
 [dir="rtl"] {
   font-family: var(--font-arabic);
+}
+
+/* ── Mobile & iOS scroll improvements ──────────────────────────── */
+
+/* Apply momentum scrolling to all scrollable containers on iOS */
+.overflow-y-auto,
+[class*="overflow-y-auto"] {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent page scroll bleed-through when a modal/drawer inner scroll hits its edge */
+.gmt-panel,
+[class*="max-h-"][class*="overflow-y-auto"] {
+  overscroll-behavior: contain;
+}
+
+/* Thin scrollbars on mobile where pointer isn't a mouse */
+@media (pointer: coarse) {
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  /* Disable hover-only transforms on touch to prevent tap-then-hover flicker */
+  .gmt-panel:hover {
+    transform: none;
+  }
+
+  .gmt-gradient-btn:hover {
+    transform: none;
+  }
+}
+
+/* Ensure touch targets are at least 44px on mobile (WCAG 2.5.5) */
+@media (max-width: 640px) {
+  button, a, select, input[type="checkbox"], input[type="radio"] {
+    min-height: 44px;
+  }
+
+  /* But don't force this on icon-only tiny elements */
+  button[aria-label] {
+    min-height: unset;
+  }
 }

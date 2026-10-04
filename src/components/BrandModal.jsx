@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { useMall } from '../context/MallContext';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 export default function BrandModal({ brand, lang, currency, onClose, onRequestRfq }) {
   const { 
@@ -24,6 +25,9 @@ export default function BrandModal({ brand, lang, currency, onClose, onRequestRf
   } = useMall();
 
   const [addedItem, setAddedItem] = useState(null);
+
+  // Lock background page scroll on iOS while modal is open
+  useBodyScrollLock(!!brand);
 
   if (!brand) return null;
 
@@ -63,7 +67,7 @@ export default function BrandModal({ brand, lang, currency, onClose, onRequestRf
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
       <div className="gmt-panel w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-3xl border border-amber-400/40 relative bg-[color:var(--bg-surface)] shadow-2xl animate-in fade-in zoom-in duration-200">
         
         {/* Close Button */}

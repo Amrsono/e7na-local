@@ -13,6 +13,7 @@ import {
   Lock
 } from 'lucide-react';
 import { useMall } from '../context/MallContext';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 export default function OutletBasketDrawer({ lang, currency }) {
   const { 
@@ -24,6 +25,9 @@ export default function OutletBasketDrawer({ lang, currency }) {
     attemptPlaceOrder,
     customer
   } = useMall();
+
+  // Lock background page scroll on iOS while drawer is open
+  useBodyScrollLock(!!activeOutletBasketBrand);
 
   if (!activeOutletBasketBrand) return null;
 
@@ -98,7 +102,7 @@ export default function OutletBasketDrawer({ lang, currency }) {
         </div>
 
         {/* Basket Items List */}
-        <div className="flex-1 overflow-y-auto p-5 space-y-3.5">
+        <div className="flex-1 overflow-y-auto p-5 space-y-3.5" style={{ WebkitOverflowScrolling: 'touch' }}>
           {items.length === 0 ? (
             <div className="text-center py-16 space-y-3">
               <div className="w-16 h-16 mx-auto rounded-2xl bg-[color:var(--bg-surface-elevated)] border border-[color:var(--hairline)] flex items-center justify-center text-3xl">

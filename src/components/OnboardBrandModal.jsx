@@ -3,10 +3,14 @@ import { X, PlusCircle, CheckCircle2, ShieldCheck, Building2, MapPin, Globe } fr
 import confetti from 'canvas-confetti';
 import { GOVERNORATES, CATEGORIES } from '../data/brandsData';
 import { useMall } from '../context/MallContext';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 export default function OnboardBrandModal({ lang, onClose }) {
   const { submitApplication } = useMall();
   const [submitted, setSubmitted] = useState(false);
+
+  // Lock background page scroll on iOS while modal is open
+  useBodyScrollLock(true);
   const [brandForm, setBrandForm] = useState({
     brandName: '',
     category: 'fashion',
@@ -29,7 +33,7 @@ export default function OnboardBrandModal({ lang, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/85 backdrop-blur-xl overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
       <div className="w-full max-w-2xl rounded-3xl border border-white/12 bg-[#090f1d] p-6 sm:p-9 shadow-2xl relative overflow-hidden animate-in fade-in zoom-in-95 duration-200">
         
         {/* Subtle Neon Top Glow Accent Bar */}

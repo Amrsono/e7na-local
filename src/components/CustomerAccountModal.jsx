@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { useMall } from '../context/MallContext';
 import { BRANDS } from '../data/brandsData';
+import { useBodyScrollLock } from '../hooks/useBodyScrollLock';
 
 export default function CustomerAccountModal({ lang, currency }) {
   const { 
@@ -35,6 +36,10 @@ export default function CustomerAccountModal({ lang, currency }) {
   const [earlyName, setEarlyName] = useState('');
 
   if (!isAccountModalOpen) return null;
+
+  // Lock background page scroll on iOS while modal is open
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useBodyScrollLock(isAccountModalOpen);
 
   const isRtl = lang === 'ar';
 
@@ -58,7 +63,7 @@ export default function CustomerAccountModal({ lang, currency }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto">
+    <div className="fixed inset-0 z-50 flex items-start sm:items-center justify-center p-2 sm:p-4 bg-slate-950/80 backdrop-blur-md overflow-y-auto" style={{ WebkitOverflowScrolling: 'touch' }}>
       <div className="gmt-panel w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-3xl border border-cyan-400/40 bg-[color:var(--bg-surface)] shadow-2xl relative animate-in fade-in zoom-in duration-200">
         
         {/* Close Button */}

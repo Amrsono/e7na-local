@@ -86,14 +86,14 @@ export default function Header({
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl font-black tracking-tight gmt-gradient-text">
+              <span className="text-xl sm:text-2xl font-black tracking-tight gmt-gradient-text">
                 {lang === 'ar' ? 'إحنا Local' : 'e7na Local'}
               </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 font-extrabold tracking-widest uppercase">
+              <span className="hidden sm:inline text-[10px] px-2 py-0.5 rounded-full bg-cyan-500/15 border border-cyan-400/30 text-cyan-300 font-extrabold tracking-widest uppercase">
                 {lang === 'ar' ? 'صنع في مصر' : 'MALL & EXPORT'}
               </span>
             </div>
-            <p className="text-[11px] text-[color:var(--ink-muted)] font-semibold -mt-0.5">
+            <p className="hidden sm:block text-[11px] text-[color:var(--ink-muted)] font-semibold -mt-0.5">
               {lang === 'ar' ? 'مول الربط الرقمي للعلامات والمصانع المصرية' : 'Egypt\'s Digital Brand Mall & Export Hub'}
             </p>
           </div>
@@ -153,11 +153,11 @@ export default function Header({
         {/* Right Tools & Account Controls */}
         <div className="flex items-center gap-2 sm:gap-2.5 shrink-0">
           
-          {/* Currency Switcher */}
+          {/* Currency Switcher — hidden on small mobile, shown md+ */}
           <select 
             value={currency} 
             onChange={(e) => setCurrency(e.target.value)}
-            className="bg-[color:var(--bg-surface-elevated)] border border-[color:var(--hairline)] text-xs font-black px-2.5 py-2 rounded-xl text-[color:var(--ink)] outline-none cursor-pointer hover:border-cyan-400/50 transition"
+            className="hidden md:block bg-[color:var(--bg-surface-elevated)] border border-[color:var(--hairline)] text-xs font-black px-2.5 py-2 rounded-xl text-[color:var(--ink)] outline-none cursor-pointer hover:border-cyan-400/50 transition"
             aria-label="Currency"
           >
             <option value="EGP">EGP (ج.م)</option>
@@ -283,7 +283,24 @@ export default function Header({
 
       {/* Mobile Drawer Navigation */}
       {mobileMenuOpen && (
-        <div className="lg:hidden border-t border-[color:var(--hairline)] bg-[color:var(--bg-surface)] p-4 space-y-2 animate-in slide-in-from-top duration-200">
+        <div className="lg:hidden border-t border-[color:var(--hairline)] bg-[color:var(--bg-surface)] p-4 space-y-2 animate-in slide-in-from-top duration-200 overflow-y-auto max-h-[80vh]">
+          
+          {/* Currency switcher — only shown in mobile drawer (hidden in header bar on mobile) */}
+          <div className="md:hidden flex items-center justify-between px-4 py-2 rounded-xl bg-[color:var(--bg-surface-elevated)] border border-[color:var(--hairline)]">
+            <span className="text-xs font-bold text-[color:var(--ink-muted)]">
+              {lang === 'ar' ? 'العملة' : 'Currency'}
+            </span>
+            <select
+              value={currency}
+              onChange={(e) => { setCurrency(e.target.value); }}
+              className="bg-transparent text-xs font-black text-[color:var(--ink)] outline-none cursor-pointer"
+              aria-label="Currency"
+            >
+              <option value="EGP">EGP (ج.م)</option>
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+            </select>
+          </div>
           
           {/* Account status in mobile drawer (Hidden when Admin is logged in) */}
           {!adminUser?.isLoggedIn && (
